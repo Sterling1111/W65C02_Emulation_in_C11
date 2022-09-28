@@ -20,9 +20,8 @@ typedef void (*instruction)(addressMode);
 typedef struct {
     word PC;
     byte SP;
-    byte SF;
     byte A, X, Y;
-    byte IRQB, NMIB, STOP, WAIT;
+    byte IRQB, NMIB, STOP, WAIT, IRQB_COMPLETED;
     byte PS;
 } W65C02;
 

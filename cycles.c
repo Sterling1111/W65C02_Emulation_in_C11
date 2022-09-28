@@ -34,5 +34,5 @@ uint64_t getCycles() {
 }
 
 void setCycleDuration(double Mhz) {
-    ci.cycleDuration = (ci.TSCFrequency - 70 * Mhz) / Mhz;
+    ci.cycleDuration = (ci.TSCFrequency /*- 70 * Mhz*/) / Mhz;
 }

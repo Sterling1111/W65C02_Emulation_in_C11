@@ -74,15 +74,15 @@ void renderThread(void* renderWindow) {
                             sfRectangleShape_setFillColor(pixel, getColor(0, 0, 224, 100));
                     } else {
                         char pixelState = vrEmuLcdPixelState(lcd, x, y);
-                        if(pixelState == -1 || pixelState == 0) {
+                        if(pixelState == -1 || pixelState == 0) {   //Should not be on so turn off if not off already
                             if(red != 0) {
-                                double rg = red * .85;
+                                double rg = red * .88;
                                 sfRectangleShape_setFillColor(pixel, getColor(rg, rg, 224, 225));
                             } else {
                                 sfRectangleShape_setFillColor(pixel, getColor(0, 0, 224, 225));
                             }
                         } else if(red != 255) {
-                            uint16_t rg = fmin(255, (red + 10) * 1.5);
+                            uint16_t rg = fmin(255, (red + 20) * 2);
                             sfRectangleShape_setFillColor(pixel, getColor(rg, rg, 255, 255));
                         } else {
                             sfRectangleShape_setFillColor(pixel, sfWhite);
@@ -90,7 +90,6 @@ void renderThread(void* renderWindow) {
                     }
                     sfRenderWindow_drawRectangleShape(window, pixels[x][y], NULL);
                 }
-
             }
             sfRenderWindow_display(window);
             renderStartTimePoint = __builtin_ia32_rdtsc();
@@ -106,7 +105,7 @@ void renderThread(void* renderWindow) {
 }
 
 int main(int argc, char* argv[]) {
-    initializeSystem("a.out", 1);
+    initializeSystem("a.out", .002);
     sfVideoMode mode = {400, 88};
     sfRenderWindow* window = sfRenderWindow_create(mode, "W65C02 Emulation", sfClose, NULL);
     sfEvent event;
@@ -125,10 +124,12 @@ int main(int argc, char* argv[]) {
             if(event.type == sfEvtClosed)
                 running = false;
             if(event.type == sfEvtKeyPressed) {
-                if(event.key.code == sfKeyI)
+                if(event.key.code == sfKeyI) {
                     cpu.IRQB = 1;
+                    cpu.IRQB_COMPLETED = 1;
+                }
                 else if(event.key.code == sfKeyN)
-                    cpu.NMIB = true;
+                    cpu.NMIB = 1;
                 else if(event.key.code == sfKeyR) {
                     sfMutex_lock(mutex);
                     setFirstReset(1);
@@ -140,7 +141,7 @@ int main(int argc, char* argv[]) {
                 if(event.key.code == sfKeyI)
                     cpu.IRQB = 0;
                 else if(event.key.code == sfKeyN) {
-                    cpu.NMIB = 0;
+                   cpu.NMIB = 0;
                 }
             }
         }

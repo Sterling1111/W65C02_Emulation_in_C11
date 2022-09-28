@@ -78,13 +78,13 @@ void NZSetStatus(byte value) {
 
 void setStatusFlags(byte flag, byte status) {
     if(status) //if we want to set the flag to on
-        cpu.SF |= flag;
+        cpu.PS |= flag;
     else
-        cpu.SF &= ~flag;
+        cpu.PS &= ~flag;
 }
 
 byte testStatusFlags(byte flag) {
-    if(cpu.SF & flag) return 1;
+    if(cpu.PS & flag) return 1;
     return 0;
 }
 
@@ -122,6 +122,7 @@ byte pullByteFromStack() {
     ++cpu.SP;
     return data;
 }
+
 byte readByteFromStack() {
     return readByte(SPToAddress());
 }
@@ -410,8 +411,11 @@ word zeroPageIndirect(byte* reg, __attribute__((unused)) operation op) {
 void execute(qword numInstructionsToExecute) {
     while(numInstructionsToExecute--) {
         if(cpu.STOP) continue;
-        if(cpu.IRQB) continue;
-        if(cpu.NMIB) continue;
+        if(cpu.IRQB) interruptRequest();
+        if(cpu.NMIB) {
+            nonMaskableInterrupt();
+            cpu.NMIB = 0;
+        }
         if(cpu.WAIT) continue;
         opcode = opcodeMatrix[fetchByte()];
         opcode.instruction(opcode.addressMode);

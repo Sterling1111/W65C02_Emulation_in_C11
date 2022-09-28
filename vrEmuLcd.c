@@ -15,6 +15,7 @@
 #include <memory.h>
 #include <math.h>
 #include <time.h>
+#include <stdio.h>
 #include "cycles.h"
 
 #if VR_LCD_EMU_STATIC
@@ -291,6 +292,7 @@ static void doShift(VrEmuLcd* lcd)
  */
 VrEmuLcd* vrEmuLcdNew(int cols, int rows, vrEmuLcdCharacterRom rom)
 {
+    lcdFunctionDuration = 37 * getTSCFrequency();
     int graphicsLCD = 0;
 
     if (cols == GRAPHICS_WIDTH_PX && rows == GRAPHICS_HEIGHT_PX)

@@ -192,7 +192,7 @@ irq:
 delay:
     phy
     phx
-    ldy #$29
+    ldy #$05
 delay2:
     ldx #$ff
 delay1:
