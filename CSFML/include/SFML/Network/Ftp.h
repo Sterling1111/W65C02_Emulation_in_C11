@@ -62,7 +62,7 @@ typedef enum
     // 2xx: the requested action has been successfully completed
     sfFtpOk                    = 200, ///< Command ok
     sfFtpPointlessCommand      = 202, ///< Command not implemented
-    sfFtpSystemStatus          = 211, ///< System status, or system help reply
+    sfFtpSystemStatus          = 211, ///< SystemLib status, or system help reply
     sfFtpDirectoryStatus       = 212, ///< Directory status
     sfFtpFileStatus            = 213, ///< File status
     sfFtpHelpMessage           = 214, ///< Help message

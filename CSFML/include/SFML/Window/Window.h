@@ -483,7 +483,7 @@ CSFML_WINDOW_API void sfWindow_display(sfWindow* window);
 ///
 /// \param window Window object
 ///
-/// \return System handle of the window
+/// \return SystemLib handle of the window
 ///
 ////////////////////////////////////////////////////////////
 CSFML_WINDOW_API sfWindowHandle sfWindow_getSystemHandle(const sfWindow* window);

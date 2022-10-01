@@ -45,9 +45,11 @@ print:
     jmp print
 
 STOP:
+    jsr delay
+    jmp reset
     stp
 
-message: .asciiz "Hello, World" ;this will put a 0 at the end of the string
+message: .asciiz "Hello, World!" ;this will put a 0 at the end of the string
 
 lcd_wait:
     pha             ;push the a register onto the stack 
@@ -89,6 +91,22 @@ print_char:
     sta PORTA
     lda #RS
     sta PORTA
+    rts
+
+delay:
+    phy
+    phx
+    ldy #$01
+delay2:
+    ldx #$2f
+delay1:
+    nop
+    dex
+    bne delay1
+    dey
+    bne delay2
+    plx
+    ply
     rts
 
 nmi:

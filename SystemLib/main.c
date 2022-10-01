@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include "vrEmuLcd.h"
-#include <SFML/Graphics.h>
+#include "SFML/Graphics.h"
 #include "system.h"
 
 #define LCD_HEIGHT 2
@@ -105,7 +105,7 @@ void renderThread(void* renderWindow) {
 }
 
 int main(int argc, char* argv[]) {
-    initializeSystem("a.out", .002);
+    initializeSystem("a.out", .001);
     sfVideoMode mode = {400, 88};
     sfRenderWindow* window = sfRenderWindow_create(mode, "W65C02 Emulation", sfClose, NULL);
     sfEvent event;
